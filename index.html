@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hero Section</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
     /* You can add custom styles here */
     body {
@@ -16,10 +15,18 @@
       background-color:#fff5e9;
     }
 
+    :root {
+      --banner-height: 0px;
+    }
+
+    #hero-section {
+      min-height: calc(100vh - var(--banner-height) - 50px);
+    }
+
   </style>
 </head>
 <body class="bg-white text-gray-800">
-  <div class="sticky top-0 z-50 bg-yellow-300 text-black shadow-md">
+  <div id="banner" class="sticky top-0 z-50 bg-yellow-300 text-black shadow-md">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-2">
       
       <!-- Left: Text -->
@@ -38,7 +45,7 @@
 
 
   <!-- HERO SECTION -->
-  <section class="min-h-screen flex flex-col justify-center px-6">
+  <section id="hero-section" class="flex flex-col justify-center px-6">
     <h1 class="text-4xl md:text-6xl font-bold mb-4">
       Belajar teknik asas yang boleh digunakan untuk buat <span class="text-red-600"> apa-apa program dalam dunia.</span>
     </h1>
@@ -329,5 +336,24 @@
     </div>
   </section>
   </section>
+
+  <script>
+    function updateBannerHeight() {
+      const banner = document.getElementById("banner");
+      if (banner) {
+        document.documentElement.style.setProperty(
+          "--banner-height",
+          banner.offsetHeight + "px"
+        );
+      }
+    }
+
+    // Run on load and when window resizes
+    window.addEventListener("load", updateBannerHeight);
+    window.addEventListener("resize", updateBannerHeight);
+    console.log(banner.offsetHeight);
+
+  </script>
+
 </body>
 </html>
