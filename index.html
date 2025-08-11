@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hero Section</title>
+  <title>C++ Level 1</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* You can add custom styles here */
@@ -44,21 +44,27 @@
 </head>
 <body class="bg-white text-gray-800">
   <div id="banner" class="sticky top-0 z-50 bg-yellow-300 text-black shadow-md">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-2">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
       
-      <!-- Left: Text -->
-      <div class="text-center md:text-left text-sm md:text-base font-semibold">
-        🔥 Tawaran Terhad : hari ini sahaja!</br>
-        <span class="text-red-600 font-bold">Diskaun 93% + Jaminan Refund</span> 
+      <!-- Left: Text & Progress -->
+      <div class="flex-1">
+        <div id="student-count-text" class="text-sm md:text-base font-semibold mb-1 text-center md:text-left">
+          🚀 Loading student data...
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div id="progress-bar" class="bg-green-500 h-3 rounded-full" style="width: 0%;"></div>
+        </div>
       </div>
       
       <!-- Right: Button -->
       <a href="#join" class="bg-black text-white text-sm md:text-base px-4 py-2 rounded-full hover:bg-gray-800 transition">
-        Lihat Harga
+        Daftar Sekarang
       </a>
-
     </div>
   </div>
+
 
 
 
@@ -71,7 +77,7 @@
       Panduan visual dan praktikal untuk pelajar yang nak cepat faham asas coding tanpa stress.
     </p>
     <a href="#join" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full text-lg transition text-center">
-      Lihat harga
+      Daftar Sekarang
     </a>
   </section>
 
@@ -502,6 +508,37 @@
     console.log(banner.offsetHeight);
 
   </script>
+
+  <script>
+  const sheetId = "1o_PVByfyy3NNcHfUMK2obi1jquivOHr6PZjvouksqRk";
+  const apiKey = "AIzaSyBU8TMPP0ZUxS_979y6cYdNOU6SfdfBXYc";
+  const range = "Sheet1!B1"; // Cell with student count
+  const totalSeats = 100;
+
+  fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
+    .then(response => response.json())
+    .then(data => {
+      if (!data.values || !data.values[0]) throw new Error("No data found");
+
+      const studentsJoined = parseInt(data.values[0][0], 10);
+      const percentage = Math.min((studentsJoined / totalSeats) * 100, 100);
+
+      // Update text with red number
+      document.getElementById("student-count-text").innerHTML =
+        `🚀 <span class="text-red-600">${studentsJoined}</span> / ${totalSeats} pelajar telah join!`;
+
+      // Update progress bar
+      const progressBar = document.getElementById("progress-bar");
+      progressBar.style.width = percentage + "%";
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      document.getElementById("student-count-text").textContent =
+        "⚠️ Tidak dapat memuat data pelajar.";
+    });
+  </script>
+
+
 
 </body>
 </html>
