@@ -44,18 +44,18 @@
 </head>
 <body class="bg-white text-gray-800">
   <div id="banner" class="sticky top-0 z-50 bg-yellow-300 text-black shadow-md">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-2">
       
       <!-- Left: Text & Progress -->
       <div class="flex-1">
-        <div id="student-count-text" class="text-sm md:text-base font-semibold mb-1 text-center md:text-left">
-          🚀 Loading student data...
+        <div id="student-count-text" class="md:text-base mb-1 text-center md:text-left">
+          🚀 Loading data...
         </div>
         
         <!-- Progress Bar -->
-        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+        <!-- <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
           <div id="progress-bar" class="bg-green-500 h-3 rounded-full" style="width: 0%;"></div>
-        </div>
+        </div> -->
       </div>
       
       <!-- Right: Button -->
@@ -377,6 +377,8 @@
       <div class="inline-block bg-yellow-600 text-white font-semibold px-4 py-2 rounded-full mb-6">
         Total: RM20
       </div>
+      <span id="scar-under-price"></span>
+
 
       <!-- Payment mode tabs -->
       <div id="paymentModes" class="mb-6">
@@ -510,32 +512,66 @@
   </script>
 
   <script>
-  const sheetId = "1o_PVByfyy3NNcHfUMK2obi1jquivOHr6PZjvouksqRk";
-  const apiKey = "AIzaSyBU8TMPP0ZUxS_979y6cYdNOU6SfdfBXYc";
-  const range = "Sheet1!B1"; // Cell with student count
-  const totalSeats = 100;
+    const sheetId = "1o_PVByfyy3NNcHfUMK2obi1jquivOHr6PZjvouksqRk";
+    const apiKey = "AIzaSyBU8TMPP0ZUxS_979y6cYdNOU6SfdfBXYc";
+    const range = "Sheet1!B2"; // Cell with student count
 
-  fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
-    .then(response => response.json())
-    .then(data => {
-      if (!data.values || !data.values[0]) throw new Error("No data found");
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        if (!data.values || !data.values[0]) throw new Error("No data found");
 
-      const studentsJoined = parseInt(data.values[0][0], 10);
-      const percentage = Math.min((studentsJoined / totalSeats) * 100, 100);
+        const seatsLeft = parseInt(data.values[0][0], 10);
 
-      // Update text with red number
-      document.getElementById("student-count-text").innerHTML =
-        `🚀 <span class="text-red-600">${studentsJoined}</span> / ${totalSeats} pelajar telah join!`;
+        document.getElementById("student-count-text").innerHTML = `
+            <span class="text-xl font-semibold"> Hari Ini Sahaja : Tinggal </span>
+            <span class="text-red-600 font-extrabold text-2xl animate-pulse">
+              ${seatsLeft} 
+            </span> <span class="text-xl font-semibold"> slot! </span>
+          </br>
+          <span class="text-sm">sebelum harga naik</span>
+          
+        `;
 
-      // Update progress bar
-      const progressBar = document.getElementById("progress-bar");
-      progressBar.style.width = percentage + "%";
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      document.getElementById("student-count-text").textContent =
-        "⚠️ Tidak dapat memuat data pelajar.";
-    });
+        document.getElementById("scar-under-price").innerHTML = `
+          <span class="text-sm">${seatsLeft} slot sahaja hari ini!</span>`;
+
+
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("student-count-text").textContent =
+          "⚠️ Tidak dapat memuat data pelajar.";
+      });
+  </script>
+
+  <script>
+    // const sheetId = "1o_PVByfyy3NNcHfUMK2obi1jquivOHr6PZjvouksqRk";
+    // const apiKey = "AIzaSyBU8TMPP0ZUxS_979y6cYdNOU6SfdfBXYc";
+    // const range = "Sheet1!B1"; // Cell with student count
+    // const totalSeats = 100;
+
+    // fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     if (!data.values || !data.values[0]) throw new Error("No data found");
+
+    //     const studentsJoined = parseInt(data.values[0][0], 10);
+    //     const percentage = Math.min((studentsJoined / totalSeats) * 100, 100);
+
+    //     // Update text with red number
+    //     document.getElementById("student-count-text").innerHTML =
+    //       `🚀 <span class="text-red-600">${studentsJoined}</span> / ${totalSeats} pelajar telah join!`;
+
+    //     // Update progress bar
+    //     const progressBar = document.getElementById("progress-bar");
+    //     progressBar.style.width = percentage + "%";
+    //   })
+    //   .catch(error => {
+    //     console.error("Error:", error);
+    //     document.getElementById("student-count-text").textContent =
+    //       "⚠️ Tidak dapat memuat data pelajar.";
+    //   });
   </script>
   <footer class="bg-gray-900 text-gray-300 py-8 px-6 mt-12">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
