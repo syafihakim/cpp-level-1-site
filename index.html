@@ -275,7 +275,7 @@
               </td>
               <td class="py-2 text-right align-top">
                 <div class="text-gray-500 line-through">RM100</div>
-                <div class="text-green-600 font-bold">RM8</div>
+                <div id="price1" class="text-green-600 font-bold">RM8</div>
               </td>
             </tr>
 
@@ -286,7 +286,7 @@
               </td>
               <td class="py-2 text-right align-top">
                 <div class="text-gray-500 line-through">RM160</div>
-                <div class="text-green-600 font-bold">RM7</div>
+                <div id="price2" class="text-green-600 font-bold">RM7</div>
               </td>
             </tr>
 
@@ -297,7 +297,7 @@
               </td>
               <td class="py-2 text-right align-top">
                 <div class="text-gray-500 line-through">RM50</div>
-                <div class="text-green-600 font-bold">RM5</div>
+                <div id="price3" class="text-green-600 font-bold">RM5</div>
               </td>
             </tr>
 
@@ -337,7 +337,7 @@
 
             <!-- Row 2 -->
             <div>Total harga</div>
-            <div class="text-green-600 text-right">RM20</div>
+            <div class="total-price text-green-600 text-right">RM20</div>
           </div>
         </div>
 
@@ -362,7 +362,7 @@
         <!-- Description -->
         <p class="text-gray-600 text-base">
           Kalau lepas belajar anda rasa program ini tak membantu langsung —
-          <span class="font-semibold text-black">saya pulangkan semula RM20 anda</span>.  
+          <span class="font-semibold text-black">saya pulangkan semula <span class="total-price">RM20</span> anda</span>.  
           Tiada soalan. Tiada syarat pelik. </br></br>
           Saya bukan nak rugi, tapi saya nak anda rasa <span class="italic">selamat mencuba</span> tanpa takut rugi.
           </br></br>Ramai pelajar sebelum ni berjaya, dan saya yakin anda pun boleh.
@@ -374,7 +374,7 @@
       <h2 class="text-2xl font-bold mb-4 text-gray-800">Cara pembayaran</h2>
 
       <!-- Total badge -->
-      <div class="inline-block bg-yellow-600 text-white font-semibold px-4 py-2 rounded-full mb-6">
+      <div class="total-price inline-block bg-yellow-600 text-white font-semibold px-4 py-2 rounded-full mb-6">
         Total: RM20
       </div>
       <span id="scar-under-price"></span>
@@ -522,6 +522,13 @@
         if (!data.values || !data.values[0]) throw new Error("No data found");
 
         const seatsLeft = parseInt(data.values[0][0], 10);
+
+        if (seatsLeft == 0) {
+          document.getElementById("price1").innerHTML = "RM20";
+          document.getElementById("price2").innerHTML = "RM10";
+          document.getElementById("price3").innerHTML = "RM10";
+          document.querySelectorAll(".total-price").forEach(el => el.innerHTML = "RM40");
+        }
 
         document.getElementById("student-count-text").innerHTML = `
             <span class="text-xl font-semibold"> Hari Ini Sahaja : Tinggal </span>
