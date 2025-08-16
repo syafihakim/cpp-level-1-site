@@ -528,20 +528,26 @@
           document.getElementById("price2").innerHTML = "RM10";
           document.getElementById("price3").innerHTML = "RM10";
           document.querySelectorAll(".total-price").forEach(el => el.innerHTML = "RM40");
+          document.getElementById("student-count-text").innerHTML = `
+            <span class="text-xl font-semibold"> 🚀 80 pelajar dah join! </span>`;
+          document.getElementById("scar-under-price").innerHTML = ``;
+        } else {
+          document.getElementById("student-count-text").innerHTML = `
+              <span class="text-xl font-semibold"> Hari Ini Sahaja : Tinggal </span>
+              <span class="text-red-600 font-extrabold text-2xl animate-pulse">
+                ${seatsLeft} 
+              </span>
+              <span class="text-xl font-semibold"> slot! </span>
+              </br>
+              <span class="text-sm">sebelum harga naik</span>
+            
+          `;
+
+          document.getElementById("scar-under-price").innerHTML = `
+            <span class="text-sm">${seatsLeft} slot sahaja hari ini!</span>`;
         }
 
-        document.getElementById("student-count-text").innerHTML = `
-            <span class="text-xl font-semibold"> Hari Ini Sahaja : Tinggal </span>
-            <span class="text-red-600 font-extrabold text-2xl animate-pulse">
-              ${seatsLeft} 
-            </span> <span class="text-xl font-semibold"> slot! </span>
-          </br>
-          <span class="text-sm">sebelum harga naik</span>
-          
-        `;
-
-        document.getElementById("scar-under-price").innerHTML = `
-          <span class="text-sm">${seatsLeft} slot sahaja hari ini!</span>`;
+        
 
 
       })
