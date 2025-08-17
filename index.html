@@ -48,8 +48,14 @@
       
       <!-- Left: Text & Progress -->
       <div class="flex-1">
-        <div id="student-count-text" class="md:text-base mb-1 text-center md:text-left">
+        <div id="top-banner" class="md:text-base mb-1 text-center md:text-left">
           🚀 Loading data...
+        </div>
+        <div class="flex justify-center items-center">
+          <span id="countdown" 
+                class="px-6 py-4shadow-lg rounded-2xl text-l font-mono text-red-600 tracking-widest">
+            --
+          </span>
         </div>
         
         <!-- Progress Bar -->
@@ -329,7 +335,7 @@
 
         <!-- Grand Total -->
         <div class="border-t pt-6 mb-6">
-          <div class="grid grid-cols-2 gap-0 text-xl font-bold items-center">
+          <div class="grid grid-cols-[1fr_auto] gap-0 text-2xl font-bold items-center">
             
             <!-- Row 1 -->
             <div></div>
@@ -337,7 +343,15 @@
 
             <!-- Row 2 -->
             <div>Total harga</div>
-            <div class="total-price text-green-600 text-right">RM20</div>
+            <div class="total-price text-right text-green-600">RM20</div>
+
+            <!-- Row 3 -->
+            <!-- <div class="promo">Promo Discount</div>
+            <div id="promo-amount" class="promo total-price text-right">-RM25</div> -->
+
+            <!-- Row 4 -->
+            <!-- <div class="promo">Harga Selepas Discount</div>
+            <div id="price-after-discount" class="promo total-price text-green-600 text-right"> RM15</div>-->
           </div>
         </div>
 
@@ -514,7 +528,7 @@
   <script>
     const sheetId = "1o_PVByfyy3NNcHfUMK2obi1jquivOHr6PZjvouksqRk";
     const apiKey = "AIzaSyBU8TMPP0ZUxS_979y6cYdNOU6SfdfBXYc";
-    const range = "Sheet1!B2"; // Cell with student count
+    const range = "Sheet1!B2:B4";
 
     fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
       .then(response => response.json())
@@ -522,17 +536,32 @@
         if (!data.values || !data.values[0]) throw new Error("No data found");
 
         const seatsLeft = parseInt(data.values[0][0], 10);
+        const promoIsOn = parseInt(data.values[1][0], 10);
+        const priceAfterDiscount = parseInt(data.values[2][0], 10);
 
-        if (seatsLeft == 0) {
+        if (promoIsOn == 1) {
+
+          document.getElementById("price1").innerHTML = "RM20";
+          document.getElementById("price2").innerHTML = "RM10";
+          document.getElementById("price3").innerHTML = "RM10";
+          document.querySelectorAll(".total-price").forEach(el => el.innerHTML = "RM15");
+          document.getElementById("top-banner").innerHTML = `
+            <span class="text-md font-semilight">
+            ⚡ WEEKEND FLASH SALE!</br>
+            <span class="text-4xl font-bold">RM15</span>
+            </span>`;
+          document.getElementById("scar-under-price").innerHTML = ``;
+
+        } else if (seatsLeft == 0) {
           document.getElementById("price1").innerHTML = "RM20";
           document.getElementById("price2").innerHTML = "RM10";
           document.getElementById("price3").innerHTML = "RM10";
           document.querySelectorAll(".total-price").forEach(el => el.innerHTML = "RM40");
-          document.getElementById("student-count-text").innerHTML = `
+          document.getElementById("top-banner").innerHTML = `
             <span class="text-xl font-semibold"> 🚀 80 pelajar dah join! </span>`;
           document.getElementById("scar-under-price").innerHTML = ``;
         } else {
-          document.getElementById("student-count-text").innerHTML = `
+          document.getElementById("top-banner").innerHTML = `
               <span class="text-xl font-semibold"> Hari Ini Sahaja : Tinggal </span>
               <span class="text-red-600 font-extrabold text-2xl animate-pulse">
                 ${seatsLeft} 
@@ -553,9 +582,35 @@
       })
       .catch(error => {
         console.error("Error:", error);
-        document.getElementById("student-count-text").textContent =
+        document.getElementById("top-banner").textContent =
           "⚠️ Tidak dapat memuat data pelajar.";
       });
+  </script>
+
+  <script>
+    // Target date: 17 Aug 11:59 PM (local time)
+    const targetDate = new Date("2025-08-17T23:59:00");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").textContent = "00H:00M:00S";
+        clearInterval(timer);
+        return;
+      }
+
+      const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
+      const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
+      const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, "0");
+
+      document.getElementById("countdown").textContent = `${hours}H:${minutes}M:${seconds}S`;
+    }
+
+    // Run immediately and every second
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
   </script>
 
   <script>
@@ -573,7 +628,7 @@
     //     const percentage = Math.min((studentsJoined / totalSeats) * 100, 100);
 
     //     // Update text with red number
-    //     document.getElementById("student-count-text").innerHTML =
+    //     document.getElementById("top-banner").innerHTML =
     //       `🚀 <span class="text-red-600">${studentsJoined}</span> / ${totalSeats} pelajar telah join!`;
 
     //     // Update progress bar
@@ -582,7 +637,7 @@
     //   })
     //   .catch(error => {
     //     console.error("Error:", error);
-    //     document.getElementById("student-count-text").textContent =
+    //     document.getElementById("top-banner").textContent =
     //       "⚠️ Tidak dapat memuat data pelajar.";
     //   });
   </script>
