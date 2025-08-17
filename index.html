@@ -57,11 +57,6 @@
             --
           </span>
         </div>
-        
-        <!-- Progress Bar -->
-        <!-- <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-          <div id="progress-bar" class="bg-green-500 h-3 rounded-full" style="width: 0%;"></div>
-        </div> -->
       </div>
       
       <!-- Right: Button -->
@@ -85,6 +80,7 @@
     <a href="#join" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full text-lg transition text-center">
       Daftar Sekarang
     </a>
+    <p class="text-sm text-center mt-2">92 students dah mula coding!</p>
   </section>
 
   <section class="bg-gray-50 py-16 px-6">
@@ -544,11 +540,11 @@
           document.getElementById("price1").innerHTML = "RM20";
           document.getElementById("price2").innerHTML = "RM10";
           document.getElementById("price3").innerHTML = "RM10";
-          document.querySelectorAll(".total-price").forEach(el => el.innerHTML = "RM15");
+          document.querySelectorAll(".total-price").forEach(el => el.innerHTML = `RM${priceAfterDiscount}`);
           document.getElementById("top-banner").innerHTML = `
             <span class="text-md font-semilight">
-            ⚡ WEEKEND FLASH SALE!</br>
-            <span class="text-4xl font-bold">RM15</span>
+            ⚡ FLASH SALE!</br>
+            <span class="text-4xl font-bold">RM${priceAfterDiscount}</span>
             </span>`;
           document.getElementById("scar-under-price").innerHTML = ``;
 
@@ -589,7 +585,7 @@
 
   <script>
     // Target date: 17 Aug 11:59 PM (local time)
-    const targetDate = new Date("2025-08-17T23:59:00");
+    const targetDate = new Date("2025-08-18T06:59:00");
 
     function updateCountdown() {
       const now = new Date();
@@ -611,35 +607,6 @@
     // Run immediately and every second
     updateCountdown();
     const timer = setInterval(updateCountdown, 1000);
-  </script>
-
-  <script>
-    // const sheetId = "1o_PVByfyy3NNcHfUMK2obi1jquivOHr6PZjvouksqRk";
-    // const apiKey = "AIzaSyBU8TMPP0ZUxS_979y6cYdNOU6SfdfBXYc";
-    // const range = "Sheet1!B1"; // Cell with student count
-    // const totalSeats = 100;
-
-    // fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     if (!data.values || !data.values[0]) throw new Error("No data found");
-
-    //     const studentsJoined = parseInt(data.values[0][0], 10);
-    //     const percentage = Math.min((studentsJoined / totalSeats) * 100, 100);
-
-    //     // Update text with red number
-    //     document.getElementById("top-banner").innerHTML =
-    //       `🚀 <span class="text-red-600">${studentsJoined}</span> / ${totalSeats} pelajar telah join!`;
-
-    //     // Update progress bar
-    //     const progressBar = document.getElementById("progress-bar");
-    //     progressBar.style.width = percentage + "%";
-    //   })
-    //   .catch(error => {
-    //     console.error("Error:", error);
-    //     document.getElementById("top-banner").textContent =
-    //       "⚠️ Tidak dapat memuat data pelajar.";
-    //   });
   </script>
   <footer class="bg-gray-900 text-gray-300 py-8 px-6 mt-12">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
