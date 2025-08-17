@@ -584,15 +584,31 @@
   </script>
 
   <script>
-    // Target date: 17 Aug 11:59 PM (local time)
-    const targetDate = new Date("2025-08-18T06:59:00");
+    const rangeDateTime = "Sheet1!B5";
 
-    function updateCountdown() {
+    let targetDateFromDB = "";
+    let timer; // declare outside so updateCountdown can access it
+
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${rangeDateTime}?key=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        if (!data.values || !data.values[0]) throw new Error("No data found");
+
+        targetDateFromDB = data.values[0][0];
+        const targetDate = new Date(targetDateFromDB);
+
+        // Run immediately and every second
+        updateCountdown(targetDate);
+        timer = setInterval(() => updateCountdown(targetDate), 1000);
+      })
+      .catch(err => console.error(err));
+
+    function updateCountdown(targetDate) {
       const now = new Date();
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        document.getElementById("countdown").textContent = "00H:00M:00S";
+        document.getElementById("countdown").textContent = "00:00:00";
         clearInterval(timer);
         return;
       }
@@ -601,13 +617,13 @@
       const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
       const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, "0");
 
-      document.getElementById("countdown").textContent = `${hours}H:${minutes}M:${seconds}S`;
+      document.getElementById("countdown").textContent = `Tamat dalam ${hours}:${minutes}:${seconds}`;
     }
 
-    // Run immediately and every second
-    updateCountdown();
-    const timer = setInterval(updateCountdown, 1000);
+
+    
   </script>
+
   <footer class="bg-gray-900 text-gray-300 py-8 px-6 mt-12">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
       <!-- Links -->
