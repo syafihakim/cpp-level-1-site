@@ -80,7 +80,7 @@
     <a href="#join" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full text-lg transition text-center">
       Daftar Sekarang
     </a>
-    <p class="text-sm text-center mt-2">92 students dah mula coding!</p>
+    <p class="text-sm text-center mt-2">100+ students dah mula coding!</p>
   </section>
 
   <section class="bg-gray-50 py-16 px-6">
@@ -534,12 +534,13 @@
         const seatsLeft = parseInt(data.values[0][0], 10);
         const promoIsOn = parseInt(data.values[1][0], 10);
         const priceAfterDiscount = parseInt(data.values[2][0], 10);
+        const promoCodeFromUrl = new URLSearchParams(window.location.search).get("promo");
 
-        if (promoIsOn == 1) {
 
-          document.getElementById("price1").innerHTML = "RM20";
-          document.getElementById("price2").innerHTML = "RM10";
-          document.getElementById("price3").innerHTML = "RM10";
+        if (promoIsOn == 1 && promoCodeFromUrl=="h19") {
+          document.getElementById("price1").innerHTML = "RM5";
+          document.getElementById("price2").innerHTML = "RM5";
+          document.getElementById("price3").innerHTML = "RM5";
           document.querySelectorAll(".total-price").forEach(el => el.innerHTML = `RM${priceAfterDiscount}`);
           document.getElementById("top-banner").innerHTML = `
             <span class="text-md font-semilight">
@@ -554,7 +555,7 @@
           document.getElementById("price3").innerHTML = "RM10";
           document.querySelectorAll(".total-price").forEach(el => el.innerHTML = "RM40");
           document.getElementById("top-banner").innerHTML = `
-            <span class="text-xl font-semibold"> 🚀 80 pelajar dah join! </span>`;
+            <span class="text-xl font-semibold"> 🚀 100+ pelajar dah join! </span>`;
           document.getElementById("scar-under-price").innerHTML = ``;
         } else {
           document.getElementById("top-banner").innerHTML = `
@@ -619,9 +620,6 @@
 
       document.getElementById("countdown").textContent = `Tamat dalam ${hours}:${minutes}:${seconds}`;
     }
-
-
-    
   </script>
 
   <footer class="bg-gray-900 text-gray-300 py-8 px-6 mt-12">
