@@ -5,42 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>C++ Level 1</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* You can add custom styles here */
-    body {
-      scroll-behavior: smooth;
-    }
-
-    .feature {
-      background-color:#fff5e9;
-    }
-
-    :root {
-      --banner-height: 0px;
-    }
-
-    #hero-section {
-      min-height: calc(100vh - var(--banner-height) - 50px);
-    }
-
-    @keyframes pulseBorder {
-      0% {
-        box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7);
-      }
-      70% {
-        box-shadow: 0 0 10px 10px rgba(255, 165, 0, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
-      }
-    }
-
-    .bg-orange-500.pulse-border {
-      position: relative;
-      animation: pulseBorder 1s infinite;
-    }
-
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
 </head>
 <body class="bg-white text-gray-800">
   <div id="banner" class="sticky top-0 z-50 bg-yellow-300 text-black shadow-md">
@@ -51,7 +17,7 @@
         <div id="top-banner" class="md:text-base mb-1 text-center md:text-left">
           🚀 Loading data...
         </div>
-        <div class="flex justify-center items-center">
+        <div id= "countdown-container" class="flex justify-center items-center hidden">
           <span id="countdown" 
                 class="px-6 py-4shadow-lg rounded-2xl text-l font-mono text-red-600 tracking-widest">
             --
@@ -387,7 +353,6 @@
       <div class="total-price inline-block bg-yellow-600 text-white font-semibold px-4 py-2 rounded-full mb-6">
         Total: RM20
       </div>
-      <span id="scar-under-price"></span>
 
 
       <!-- Payment mode tabs -->
@@ -444,184 +409,7 @@
         Whatsapp resit pembayaran ke <span class="font-semibold">010-5820083</span>. Saya akan reply sebelum pukul 5 petang (sebarang pertanyaan Whatsapp je)
       </p>
     </section>
-
-    <script>
-      const targetDiv = document.getElementById('banner');
-      const section2 = document.getElementById('gold');
-
-      window.addEventListener('scroll', () => {
-        const section2Bottom = section2.getBoundingClientRect().bottom;
-
-        // If the bottom of section2 is above the viewport top (i.e. scrolled past)
-        if (section2Bottom < 0) {
-          targetDiv.style.display = 'none';  // hide
-        } else {
-          targetDiv.style.display = 'block'; // show
-        }
-      });
-    </script>
-
-    <script>
-      const tabs = document.querySelectorAll('.payment-tab');
-      const contents = document.querySelectorAll('.payment-content');
-      const copyBtn = document.getElementById('copyAccBtn');
-
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // Remove active styles from all tabs
-          tabs.forEach(t => {
-            t.classList.remove('border-orange-500', 'text-orange-600', 'font-semibold');
-            t.classList.add('text-gray-600');
-          });
-
-          // Hide all content
-          contents.forEach(c => c.classList.add('hidden'));
-
-          // Activate clicked tab
-          tab.classList.add('border-orange-500', 'text-orange-600', 'font-semibold');
-          tab.classList.remove('text-gray-600');
-
-          // Show corresponding content
-          const mode = tab.getAttribute('data-mode');
-          document.getElementById(mode).classList.remove('hidden');
-        });
-      });
-
-      if(copyBtn) {
-        copyBtn.addEventListener('click', () => {
-          const accNumber = "1062 0305 8090";
-          navigator.clipboard.writeText(accNumber).then(() => {
-            copyBtn.textContent = "Copied!";
-            setTimeout(() => {
-              copyBtn.textContent = "Copy";
-            }, 2000);
-          }).catch(() => {
-            alert("Gagal copy nombor akaun. Sila copy secara manual.");
-          });
-        });
-      }
-    </script>
-
-
-  <script>
-    function updateBannerHeight() {
-      const banner = document.getElementById("banner");
-      if (banner) {
-        document.documentElement.style.setProperty(
-          "--banner-height",
-          banner.offsetHeight + "px"
-        );
-      }
-    }
-
-    // Run on load and when window resizes
-    window.addEventListener("load", updateBannerHeight);
-    window.addEventListener("resize", updateBannerHeight);
-    console.log(banner.offsetHeight);
-
-  </script>
-
-  <script>
-    const sheetId = "1o_PVByfyy3NNcHfUMK2obi1jquivOHr6PZjvouksqRk";
-    const apiKey = "AIzaSyBU8TMPP0ZUxS_979y6cYdNOU6SfdfBXYc";
-    const range = "Sheet1!B2:B4";
-
-    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
-      .then(response => response.json())
-      .then(data => {
-        if (!data.values || !data.values[0]) throw new Error("No data found");
-
-        const seatsLeft = parseInt(data.values[0][0], 10);
-        const promoIsOn = parseInt(data.values[1][0], 10);
-        const priceAfterDiscount = parseInt(data.values[2][0], 10);
-        const promoCodeFromUrl = new URLSearchParams(window.location.search).get("promo");
-
-
-        if (promoIsOn == 1 && promoCodeFromUrl=="h19") {
-          document.getElementById("price1").innerHTML = "RM5";
-          document.getElementById("price2").innerHTML = "RM5";
-          document.getElementById("price3").innerHTML = "RM5";
-          document.querySelectorAll(".total-price").forEach(el => el.innerHTML = `RM${priceAfterDiscount}`);
-          document.getElementById("top-banner").innerHTML = `
-            <span class="text-md font-semilight">
-            ⚡ FLASH SALE!</br>
-            <span class="text-4xl font-bold">RM${priceAfterDiscount}</span>
-            </span>`;
-          document.getElementById("scar-under-price").innerHTML = ``;
-
-        } else if (seatsLeft == 0) {
-          document.getElementById("price1").innerHTML = "RM20";
-          document.getElementById("price2").innerHTML = "RM10";
-          document.getElementById("price3").innerHTML = "RM10";
-          document.querySelectorAll(".total-price").forEach(el => el.innerHTML = "RM40");
-          document.getElementById("top-banner").innerHTML = `
-            <span class="text-xl font-semibold"> 🚀 100+ pelajar dah join! </span>`;
-          document.getElementById("scar-under-price").innerHTML = ``;
-        } else {
-          document.getElementById("top-banner").innerHTML = `
-              <span class="text-xl font-semibold"> Hari Ini Sahaja : Tinggal </span>
-              <span class="text-red-600 font-extrabold text-2xl animate-pulse">
-                ${seatsLeft} 
-              </span>
-              <span class="text-xl font-semibold"> slot! </span>
-              </br>
-              <span class="text-sm">sebelum harga naik</span>
-            
-          `;
-
-          document.getElementById("scar-under-price").innerHTML = `
-            <span class="text-sm">${seatsLeft} slot sahaja hari ini!</span>`;
-        }
-
-        
-
-
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        document.getElementById("top-banner").textContent =
-          "⚠️ Tidak dapat memuat data pelajar.";
-      });
-  </script>
-
-  <script>
-    const rangeDateTime = "Sheet1!B5";
-
-    let targetDateFromDB = "";
-    let timer; // declare outside so updateCountdown can access it
-
-    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${rangeDateTime}?key=${apiKey}`)
-      .then(response => response.json())
-      .then(data => {
-        if (!data.values || !data.values[0]) throw new Error("No data found");
-
-        targetDateFromDB = data.values[0][0];
-        const targetDate = new Date(targetDateFromDB);
-
-        // Run immediately and every second
-        updateCountdown(targetDate);
-        timer = setInterval(() => updateCountdown(targetDate), 1000);
-      })
-      .catch(err => console.error(err));
-
-    function updateCountdown(targetDate) {
-      const now = new Date();
-      const diff = targetDate - now;
-
-      if (diff <= 0) {
-        document.getElementById("countdown").textContent = "00:00:00";
-        clearInterval(timer);
-        return;
-      }
-
-      const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
-      const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
-      const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, "0");
-
-      document.getElementById("countdown").textContent = `Tamat dalam ${hours}:${minutes}:${seconds}`;
-    }
-  </script>
-
+  </section>
   <footer class="bg-gray-900 text-gray-300 py-8 px-6 mt-12">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
       <!-- Links -->
