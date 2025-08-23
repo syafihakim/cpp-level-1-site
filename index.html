@@ -9,84 +9,123 @@
   <script defer src="app.js"></script>
 </head>
 <body class="bg-white text-gray-800">
-  <div id="banner" class="sticky top-0 z-50 bg-yellow-300 text-black shadow-md">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-2">
-      
-      <!-- Left: Text & Progress -->
-      <div class="flex-1">
-        <div id="top-banner" class="md:text-base mb-1 text-center md:text-left">
-          🚀 Loading data...
+    <div id="banner" class="sticky top-0 z-50 bg-yellow-300 text-black shadow-md">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-2">
+        
+        <!-- Left: Text & Progress -->
+        <div class="flex-1">
+          <div id="top-banner" class="md:text-base mb-1 text-center md:text-left">
+            🚀 Loading data...
+          </div>
+          <div id= "countdown-container" class="flex justify-center items-center hidden">
+            <span id="countdown" 
+                  class="px-6 py-4shadow-lg rounded-2xl text-l font-mono text-red-600 tracking-widest">
+              --
+            </span>
+          </div>
         </div>
-        <div id= "countdown-container" class="flex justify-center items-center hidden">
-          <span id="countdown" 
-                class="px-6 py-4shadow-lg rounded-2xl text-l font-mono text-red-600 tracking-widest">
-            --
-          </span>
-        </div>
+        
+        <!-- Right: Button -->
+        <a href="#join" class="bg-black text-white text-sm md:text-base px-4 py-2 rounded-full hover:bg-gray-800 transition">
+          Daftar Sekarang
+        </a>
       </div>
-      
-      <!-- Right: Button -->
-      <a href="#join" class="bg-black text-white text-sm md:text-base px-4 py-2 rounded-full hover:bg-gray-800 transition">
+    </div>
+
+    <section id="hero-section" 
+             class="py-16 min-h-screen flex flex-col justify-center px-6 text-center 
+                    bg-gradient-to-b from-[#0a0f1f] via-[#0f172a] to-[#1e293b] text-white">
+
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">
+        Belajar teknik asas yang boleh digunakan untuk buat 
+        <span class="text-red-500"> apa-apa program dalam dunia.</span>
+      </h1>
+
+      <p class="text-lg md:text-xl mb-6 max-w-xl mx-auto text-gray-300">
+        Panduan visual dan praktikal untuk pelajar yang nak cepat faham asas coding tanpa stress.
+      </p>
+
+      <a href="#join" 
+         class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full text-lg transition text-center">
         Daftar Sekarang
       </a>
-    </div>
-  </div>
+      
+    </section>
+    <!-- HERO SECTION -->
+    
+    <!-- Demo sections -->
+    <section class="relative flex flex-col items-center justify-center px-4 pt-16 pb-12 
+                    text-white w-full max-w-screen overflow-hidden 
+                    bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#0a0f1f]">
 
-
-
-
-  <!-- HERO SECTION -->
-  <section id="hero-section" class="flex flex-col justify-center px-6">
-    <h1 class="text-4xl md:text-6xl font-bold mb-4">
-      Belajar teknik asas yang boleh digunakan untuk buat <span class="text-red-600"> apa-apa program dalam dunia.</span>
-    </h1>
-    <p class="text-lg md:text-xl mb-6 max-w-xl text-gray-600">
-      Panduan visual dan praktikal untuk pelajar yang nak cepat faham asas coding tanpa stress.
-    </p>
-    <a href="#join" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full text-lg transition text-center">
-      Daftar Sekarang
-    </a>
-    <p class="text-sm text-center mt-2">100+ students dah mula coding!</p>
-  </section>
-
-  <section class="bg-gray-50 py-16 px-6">
-    <div class="max-w-6xl mx-auto mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">Belajar teknik-teknik yang University pun tak ajar!</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">
-        Teknik yang direka khas untuk anda yang mula dari zero dan tak pernah sentuh coding
+      <p class="mb-6 text-xl font-semibold text-orange-400 animate-pulse">
+        🚀 Anda akan buat 10 program macam di bawah!
       </p>
-    </div>
 
-    <div class="grid gap-8 md:grid-cols-3 sm:grid-cols-2">
-      <!-- Feature 1 -->
-      <div class="feature p-6 rounded-xl shadow hover:shadow-lg transition">
-        <img src="bulb.png"
-             class="p-2 mb-4 w-24 h-24 rounded-full border-2 bg-blue-100 object-cover"
-             width="32" />
-        <h3 class="text-xl font-semibold mb-2 leading-2">Belajar "5 Steps A-to-Z"</h3>
-        <p class="text-gray-600 text-sm">Buat apa sahaja program dan jawab soalan-soalan coding dengan mudah, cepat dan tepat. </br> </br>
-        Senior Software Engineer pun gunakan teknik yang sama dalam kerja mereka.</p>
+      <!-- Scrollable container -->
+      <div id="demoContainer" class="w-full max-w-md mx-auto overflow-x-auto flex snap-x snap-mandatory scrollbar-hide">
+
+        <!-- GIF Demo -->
+        <div class="w-80 h-80 snap-center bg-purple-800/80 rounded-2xl shadow-xl 
+                    flex items-center justify-center shrink-0 mr-6 hover:scale-105 hover:shadow-2xl 
+                    transition transform duration-300">
+          <video autoplay loop muted playsinline 
+                 class="w-full h-full object-cover rounded-2xl border-2 border-purple-400/40">
+            <source src="demo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <!-- Video Thumbnail (blur + play button) -->
+        <div class="w-80 h-80 snap-end relative rounded-2xl shadow-xl overflow-hidden shrink-0 
+                    hover:scale-105 hover:shadow-2xl transition transform duration-300">
+          
+          <!-- Blurred thumbnail -->
+          <img src="thumbnail.png" alt="Watch Explanation" 
+               class="w-full h-full object-cover blur-sm" />
+          
+          <!-- Overlay -->
+          <div class="absolute inset-0 flex items-center justify-center bg-black/40">
+            <button id="openModal" 
+                    class="w-16 h-16 flex items-center justify-center 
+                           bg-white/80 rounded-full shadow-lg hover:bg-orange-400 hover:scale-110 
+                           transition transform duration-300">
+              <!-- Play Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" 
+                   viewBox="0 0 24 24" class="w-8 h-8 text-black">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- Feature 2 -->
-      <div class="feature p-6 rounded-xl shadow hover:shadow-lg transition">
-        <img src="lightning.png"
-             class="p-2 mb-4 w-24 h-24 rounded-full border-2 bg-blue-100 object-cover"
-             width="32" />
-        <h3 class="text-xl font-semibold mb-2 leading-2">Belajar teknik menghafal coding</h3>
-        <p class="text-gray-600 text-sm">Teknik mengingat keyword-keyword C++ supaya anda tahu apa yang perlu ditulis setiap kali membuat coding</p>
-      </div>
+      <!-- Circle scroll indicators -->
+      <p class="text-sm text-gray-300 italic my-6">
+        👉 Swipe untuk <span class="text-orange-400">tonton video penerangan</span>
+      </p>
 
-      <!-- Feature 3 -->
-      <div class="feature p-6 rounded-xl shadow hover:shadow-lg transition">
-        <img src="puzzle.png"
-             class="p-4 mb-4 w-24 h-24 rounded-full bg-blue-100 object-cover"
-             width="32" />
-        <h3 class="text-xl font-semibold mb-2 leading-2">Buktikan kefahaman anda : Buat 10 program sebenar</h3>
-        <p class="text-gray-600 text-sm">Anda bakal mampu membuat 10 program C++ tanpa anda sedar. 
-        </br> </br> Buat bersama-sama saya (melalui video) dan lihat cara saya menggunakan "5 Steps A-to-Z"</p>
+      <!-- Modal -->
+      <div id="videoModal" 
+           class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden p-4">
+
+        <!-- Close button -->
+        <button id="closeModal" 
+                class="absolute top-3 right-3 text-gray-300 hover:text-white text-4xl font-bold">
+         ×
+        </button>
+        <div class="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl w-11/12 max-w-xl relative">
+        
+          <!-- Video container -->
+          <div id="video-section" 
+               class="w-full max-w-sm aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-lg p-2">
+            <video id="popupVideo" class="w-full h-full object-cover" controls playsinline preload="metadata">
+              <source src="video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
       </div>
-    </div>
     </section>
 
 

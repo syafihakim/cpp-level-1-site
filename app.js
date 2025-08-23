@@ -1,3 +1,76 @@
+// SHOWCASE STARTS
+// VIDEO MODAL SCRIPT
+const openBtn = document.getElementById('openModal');
+const closeBtn = document.getElementById('closeModal');
+const modal = document.getElementById('videoModal');
+const popup = document.getElementById("videoPopup");
+const video = document.getElementById("popupVideo");
+
+  openBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    video.pause();         // pause video
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+
+
+// SHOWCASE SLIDER
+const container = document.getElementById("demoContainer");
+const slides = container.children;
+const slideWidth = slides[0].offsetWidth + 16; // adjust if you use margin
+let currentIndex = 0;
+
+// Function to scroll to a slide
+function goToSlide(index) {
+  currentIndex = Math.max(0, Math.min(index, slides.length - 1));
+  container.scrollTo({
+    left: currentIndex * slideWidth,
+    behavior: "smooth",
+  });
+}
+
+// Handle wheel scroll (desktop)
+container.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  if (e.deltaY > 0 || e.deltaX > 0) {
+    goToSlide(currentIndex + 1);
+  } else {
+    goToSlide(currentIndex - 1);
+  }
+}, { passive: false });
+
+// Handle swipe gesture (mobile)
+let startX = 0;
+container.addEventListener("touchstart", (e) => {
+  startX = e.touches[0].clientX;
+});
+
+container.addEventListener("touchend", (e) => {
+  const endX = e.changedTouches[0].clientX;
+  const diffX = startX - endX;
+
+  if (Math.abs(diffX) > 50) { // swipe threshold
+    if (diffX > 0) {
+      goToSlide(currentIndex + 1); // swipe left → next
+    } else {
+      goToSlide(currentIndex - 1); // swipe right → prev
+    }
+  } else {
+    goToSlide(currentIndex); // snap back if swipe too small
+  }
+});
+// SHOWCASE ENDS
+
+
+
 const targetDiv = document.getElementById('banner');
 const section2 = document.getElementById('gold'); 
 
